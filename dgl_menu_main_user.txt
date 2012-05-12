@@ -1,0 +1,24 @@
+ ## $SERVERID - Nethack
+
+ Logged in as: $USERNAME
+
+ ## User Management ##
+ c) Change password
+ e) Change email address
+
+ ## Nethack Options ##
+ w) Watch games in progress
+ o) Edit options
+ p) Play NetHack BingeHack
+
+ ## Scores ##
+ b) Start the binge board
+ h) View high scores
+ l) Show play log
+ r) Show the recent play log (MUCH FASTER)
+
+ ## Misc ##
+ n) MOTD/news (updated: 2011.09.15)
+ q) Quit
+
+ => 

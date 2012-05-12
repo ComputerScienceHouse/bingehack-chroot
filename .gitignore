@@ -1,0 +1,36 @@
+# Basically serves as a list of "stuff you'll want to scoop in from outside
+# this chroot from your install"
+bin/bash
+bin/board
+bin/cat
+bin/date
+bin/dialog
+bin/ee
+bin/gzip
+bin/mkfifo
+bin/mktemp
+bin/rm
+bin/sh
+bin/sha1sum
+bin/tac
+bin/tail
+bin/ttyplay
+bin/virus
+bin/wc
+dgamelaunch
+lib/
+usr/bin/less
+usr/bin/lessecho
+usr/bin/lesskey
+usr/bin/locale
+
+# Things that are just things that don't belong in a repo, period.
+# (like backup copies, old data, user-specific data, and generated binaries)
+dgamelaunch*
+*.debug
+*.log
+dgldir/
+mail/
+nh343/
+tmp/
+usr/

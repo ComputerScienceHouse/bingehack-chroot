@@ -1,0 +1,21 @@
+ ## $SERVERID - Nethack
+
+ Not logged in.
+
+ ## User Management ##
+ l) Login
+ r) Register new user
+
+ ## Nethack Options ##
+ w) Watch games in progress
+
+ ## Scores ##
+ b) Start the binge board
+ h) View high scores
+
+ ## Misc ##
+ n) MOTD/news (updated: 2011.09.15)
+ q) Quit
+
+
+ =>

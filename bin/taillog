@@ -1,0 +1,4 @@
+#!/bin/bash
+/bin/tail -n 20 "$*" > /tmp/temp_tail_of_playlog
+/bin/playlog /tmp/temp_tail_of_playlog
+

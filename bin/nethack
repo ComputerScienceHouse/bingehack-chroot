@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export LC_ALL="en_US.UTF-8"
+exec "/nh343/nethack" 1>&2

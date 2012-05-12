@@ -1,0 +1,6 @@
+#!/bin/bash
+trap '/bin/rm -f "$tempfile"' EXIT
+tempfile="$(mktemp -t scores.XXXXXXX)"
+
+/bin/logfile_to_xlogfile "$*" > "$tempfile"
+/bin/scores "$tempfile"

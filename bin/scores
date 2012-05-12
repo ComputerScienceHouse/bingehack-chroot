@@ -1,0 +1,124 @@
+#!/bin/bash
+set -e
+export PATH="/bin:/usr/bin"
+
+declare -a tempfiles
+trap 'rm -f "${tempfiles[@]}"' EXIT
+
+function tmpfile {
+	local arg
+	if [[ "$1" == "-u" ]]; then
+		arg="$1"
+		shift
+	fi
+	f="$(mktemp $arg -t "$*.XXXXXXX")"
+	tempfiles+=( "$f" )
+}
+
+function usage {
+	echo "Usage: ${0##*/} [-r] scores_file"
+}
+
+while getopts 'r' opt; do
+	case "$opt" in
+		r)
+			reverse="true"
+			shift
+			;;
+		*)
+			usage >&2
+			exit 1
+	esac
+done
+
+if [[ $# -ne 1 ]]; then
+	usage >&2
+	exit 1
+fi
+
+function readlog {
+	local IFS=":" v="$*"
+	set -- $v
+	unset IFS
+	for i; do
+		IFS="="
+		set -- $i
+		unset IFS
+		eval "$1=\"$2\""
+	done
+}
+
+function hash {
+	set -- $(sha1sum <<< "$*")
+	h="${1:0:17}"
+}
+
+logfile="$*"
+set -- $(wc -l "$*")
+declare -i lines_per_percent="$1"
+
+if [[ $lines_per_percent -gt 100 ]]; then
+	let lines_per_percent/=100
+fi
+
+declare -i lineno=0 cnt=0
+
+tmpfile -u scores.fifo
+tempfifo="$f"
+mkfifo "$tempfifo"
+
+(
+	exec 3< "$tempfifo"
+	dialog --title "Score Viewer" --gauge "Reading Scores Log" 0 40 0 <&3
+	exec 3>&-
+) &
+
+tmpfile scores.args
+argsfile="$f"
+declare -A time_hash name_hash
+exec 3> "$tempfifo"
+exec 4> "$argsfile"
+while read -r line; do
+	cnt+=1
+	if [[ $cnt -eq $lines_per_percent ]]; then
+		cnt=0
+		lineno+=1
+		echo $lineno >&3
+	fi
+
+	readlog $line
+
+	line="$name-$role-$race-$gender-$align $death on level $deathlev (HP: $hp [$maxhp])"
+	if [[ -n "$starttime" ]]; then
+		h="$(date -d @$starttime '+%D %T')"
+	else
+		hash "$line"
+	fi
+	time_hash[$h]="$starttime"
+	name_hash[$h]="$name"
+	echo "\"$h\" \"$line\"" >&4
+	unset starttime
+done < "$logfile"
+exec 3>&-
+exec 4>&-
+
+if [[ -n "$reverse" ]]; then
+	tmpfile scores.args.rev
+	tac "$argsfile" > "$f"
+	argsfile="$f"
+fi
+
+tmpfile scores
+tempfile="$f"
+exec 3> "$tempfile"
+while true; do
+	dialog --output-fd 3 --title "High Scores" --menu "" 0 0 0 --file "$argsfile" || break
+	chosen_hash="$(cat "$tempfile")"
+	dumplog="/dgldir/userdata/${name_hash[$chosen_hash]}/dumplog/${time_hash[$chosen_hash]}.nh343.txt"
+	if [[ -f "$dumplog" ]]; then
+		less "$dumplog"
+	else
+		dialog --title "Error" --msgbox "No dumplog found" 5 20
+	fi
+done
+exec 3>&-
