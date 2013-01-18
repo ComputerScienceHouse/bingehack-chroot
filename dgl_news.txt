@@ -4,6 +4,9 @@ https://github.com/ComputerScienceHouse/bingehack/commits/master
 for much more detailed information on the current deployed version of BingeHack.
 *****
 
+2013.01.18
+ - Added an "Adventurer's Notebook" to keep track of games.
+
 2011.10.08
  - Added over seventy in-game achievements.
 

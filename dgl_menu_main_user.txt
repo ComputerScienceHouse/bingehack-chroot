@@ -9,6 +9,7 @@
  ## Nethack Options ##
  w) Watch games in progress
  o) Edit options
+ a) Edit Adventurer's Notebook
  p) Play NetHack BingeHack
 
  ## Scores ##
@@ -18,7 +19,7 @@
  r) Show the recent play log (MUCH FASTER)
 
  ## Misc ##
- n) MOTD/news (updated: 2011.09.15)
+ n) MOTD/news (updated: 2013.01.18)
  q) Quit
 
  => 
