@@ -16,6 +16,15 @@ OPTIONS=menustyle:full
 #OPTIONS=sortloot:full
 OPTIONS=menu_headings:inverse
 
+# Enable the ncurses ui.
+OPTIONS=windowtype:curses
+OPTIONS=align_message:right
+OPTIONS=align_status:bottom
+OPTIONS=popup_dialog
+OPTIONS=windowborders:3
+OPTIONS=petattr:u
+OPTIONS=guicolor
+
 # == Show extra stuff ========================================
 #OPTIONS=showborn
 OPTIONS=showexp,showscore,time
@@ -38,7 +47,7 @@ OPTIONS=death_explore
 OPTIONS=extmenu
 OPTIONS=!legacy
 OPTIONS=large_font
-OPTIONS=!splash_screen
+OPTIONS=splash_screen
 #OPTIONS=!verbose
 OPTIONS=showweight,invweight
 OPTIONS=perm_invent
